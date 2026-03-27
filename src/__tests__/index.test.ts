@@ -189,4 +189,14 @@ describe('edge cases', () => {
     expect(result.stats.total).toBe(2);
     expect(result.stats.verified).toBe(2);
   });
+
+  it('preserves sentence punctuation when stripping citations', () => {
+    const guard = makeGuard();
+    const result = guard.verify('Treatment is effective [5].', [
+      { id: '1', content: 'doc' },
+    ]);
+
+    // Should not leave a space before the period
+    expect(result.cleanResponse).toBe('Treatment is effective.');
+  });
 });

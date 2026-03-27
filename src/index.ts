@@ -118,8 +118,11 @@ export class CitationGuard {
       }
     }
 
-    // Clean up extra whitespace left by stripped citations
-    cleanResponse = cleanResponse.replace(/\s{2,}/g, ' ').trim();
+    // Clean up extra whitespace and awkward punctuation left by stripped citations
+    cleanResponse = cleanResponse
+      .replace(/\s{2,}/g, ' ')
+      .replace(/\s+([.,;:!?])/g, '$1')
+      .trim();
 
     const total = citations.length;
 

@@ -149,6 +149,10 @@ Based on production deployment processing thousands of clinical queries.
 
 This library was extracted from a clinical AI platform where citation accuracy is non-negotiable. A physician who receives a fabricated reference and acts on it is a liability and safety issue. `citation-guard` was the solution.
 
+## Part of the LLM Trust Layer
+
+This module is the citation verification component of [llm-trust-layer](https://github.com/nomad-link-id/llm-trust-layer) -- an end-to-end pipeline combining smart routing, hybrid RAG, and citation verification.
+
 ## License
 
 MIT

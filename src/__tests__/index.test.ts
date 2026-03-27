@@ -158,3 +158,35 @@ describe('flag mode', () => {
     expect(result.stats.removed).toBe(1);
   });
 });
+
+// ─── Edge cases ───────────────────────────────────────────────────────────────
+
+describe('edge cases', () => {
+  it('handles adjacent citation markers [1][2][3]', () => {
+    const guard = makeGuard();
+    const result = guard.verify('Evidence [1][2][3] supports this.', [
+      { id: '1', content: 'doc1' },
+      { id: '2', content: 'doc2' },
+      { id: '3', content: 'doc3' },
+    ]);
+
+    expect(result.stats.total).toBe(3);
+    expect(result.stats.verified).toBe(3);
+    expect(result.cleanResponse).toContain('[1]');
+    expect(result.cleanResponse).toContain('[2]');
+    expect(result.cleanResponse).toContain('[3]');
+  });
+
+  it('handles multi-digit citation markers [10][12]', () => {
+    const guard = makeGuard();
+    const docs = Array.from({ length: 12 }, (_, i) => ({
+      id: `${i + 1}`,
+      content: `doc ${i + 1}`,
+    }));
+
+    const result = guard.verify('See [10] and [12] for details.', docs);
+
+    expect(result.stats.total).toBe(2);
+    expect(result.stats.verified).toBe(2);
+  });
+});
